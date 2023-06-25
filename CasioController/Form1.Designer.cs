@@ -249,7 +249,7 @@
             Controls.Add(CurrentTimeLabel);
             Controls.Add(label1);
             Name = "Form1";
-            Text = "CasioController";
+            Text = "Watch Controller";
             Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();

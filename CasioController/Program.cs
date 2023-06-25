@@ -1,4 +1,4 @@
-namespace CasioController
+namespace WatchController
 {
     internal static class Program
     {

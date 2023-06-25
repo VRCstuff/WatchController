@@ -1,7 +1,6 @@
 using BuildSoft.VRChat.Osc;
-using System.Collections.ObjectModel;
 
-namespace CasioController
+namespace WatchController
 {
     public partial class Form1 : Form
     {
@@ -35,8 +34,10 @@ namespace CasioController
         private void secondTimer_Tick(object sender, EventArgs e)
         {
             DateTime dtNow = DateTime.Now;
+
+            DateTime dtNowTZ = DateTime.Now;
             if (timezoneDropdown.SelectedIndex > 0)
-                dtNow = TimeZoneInfo.ConvertTime(DateTime.Now, tz[timezoneDropdown.SelectedIndex - 1]);
+                dtNowTZ = TimeZoneInfo.ConvertTime(DateTime.Now, tz[timezoneDropdown.SelectedIndex - 1]);
 
             if (hourlyBeepCheckbox.Checked)
             {
@@ -49,36 +50,32 @@ namespace CasioController
 
             float eightBitMultiplier = 0.00787401574803149606299212598425f;
 
-            float hourVal = dtNow.Hour;
-            float minVal = dtNow.Minute;
-
             float realTimeHour;
+            float realTimeHourTZ;
             float realTimeMin;
 
             if (watchType.SelectedIndex == 0)
             {
-                realTimeHour = hourVal * eightBitMultiplier;
-                realTimeMin = minVal * eightBitMultiplier;
+                realTimeHour = dtNow.Hour * eightBitMultiplier;
+                realTimeHourTZ = dtNowTZ.Hour * eightBitMultiplier;
+                realTimeMin = dtNow.Minute * eightBitMultiplier;
             }
             else
             {
-                long totalMilliseconds = dtNow.TimeOfDay.Ticks / TimeSpan.TicksPerMillisecond;
-                float timeOfDayFloat = (float)totalMilliseconds / (24 * 60 * 60 * 1000);
-
-                float minuteInHourFloat = (dtNow.Minute * 60f + dtNow.Second + dtNow.Millisecond / 1000f) / 3600f;
-
-                realTimeHour = timeOfDayFloat;
-                realTimeMin = minuteInHourFloat;
+                realTimeHour = (float)(dtNow.TimeOfDay.Ticks / TimeSpan.TicksPerMillisecond) / (24 * 60 * 60 * 1000);
+                realTimeHourTZ = (float)(dtNowTZ.TimeOfDay.Ticks / TimeSpan.TicksPerMillisecond) / (24 * 60 * 60 * 1000);
+                realTimeMin = (dtNow.Minute * 60f + dtNow.Second + dtNow.Millisecond / 1000f) / 3600f;
             }
 
             // Update UI
-            this.CurrentTimeLabel.Text = $"Current Time - {hourVal:00}:{minVal:00}";
-            this.realTimeHour.Text = $"RealTimeHour - {realTimeHour:0.00000000}";
+            this.CurrentTimeLabel.Text = $"Current Time - {dtNow.Hour:00}:{dtNow.Minute:00}";
+            this.realTimeHour.Text = $"RealTimeHour - {realTimeHour:0.00000000} TZ - {realTimeHourTZ:0.00000000}";
             this.realTimeMin.Text = $"RealTimeMin - {realTimeMin:0.00000000}";
 
 
             // Send data to OSC
             OscParameter.SendAvatarParameter("RealTimeHour", realTimeHour);
+            OscParameter.SendAvatarParameter("RealTimeHourTZ", realTimeHourTZ);
             OscParameter.SendAvatarParameter("RealTimeMin", realTimeMin);
         }
 

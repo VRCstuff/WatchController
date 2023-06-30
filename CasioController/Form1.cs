@@ -26,11 +26,6 @@ namespace WatchController
             OscConnectionSettings.ReceivePort = (int)Properties.Settings.Default["ReceivePort"];
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void secondTimer_Tick(object sender, EventArgs e)
         {
             DateTime dtNow = DateTime.Now;

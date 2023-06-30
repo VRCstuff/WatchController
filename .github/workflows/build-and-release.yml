@@ -1,0 +1,55 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # Match tags starting with 'v'
+    branches:
+      - main  # Replace with your branch name if needed
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest  # Use a Windows runner for building C# WinForms apps
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 7.0.8  # Replace with the desired .NET version
+
+      - name: Install .NET SDK
+        run: dotnet tool install --global dotnet-ef --version 7.0.x  # Replace with the desired .NET version
+
+      - name: Build
+        run: |
+          cd CasioController  # Replace with the actual folder name
+          dotnet build --configuration Release
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Zip Artifacts
+        run: |
+          cd CasioController/bin/Release/net7.0-windows  # Replace with the actual folder path
+          7z a WatchController.zip ./*.exe ./*.dll ./*.json ./*.pdb  # Include all JSON and PDB files
+
+      - name: Upload Release Artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: CasioController/bin/Release/WatchController.zip  # Replace with the path to your zip file
+          asset_name: WatchController.zip
+          asset_content_type: application/zip

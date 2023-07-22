@@ -24,6 +24,10 @@ namespace WatchController
             OscConnectionSettings.SendPort = (int)Properties.Settings.Default["SendPort"];
             textBox2.Text = $"{(int)Properties.Settings.Default["ReceivePort"]}";
             OscConnectionSettings.ReceivePort = (int)Properties.Settings.Default["ReceivePort"];
+
+
+            string version = System.Windows.Forms.Application.ProductVersion;
+            this.Text = String.Format("Watch Controller {0}", version);
         }
 
         private void secondTimer_Tick(object sender, EventArgs e)
@@ -129,6 +133,16 @@ namespace WatchController
                 Properties.Settings.Default.Save();
                 OscConnectionSettings.ReceivePort = value;
             }
+        }
+
+        private void latestReleaseLink_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("explorer", "https://github.com/VRCstuff/WatchController/releases/latest");
+        }
+
+        private void githubLink_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("explorer", "https://github.com/VRCstuff/WatchController/");
         }
     }
 }

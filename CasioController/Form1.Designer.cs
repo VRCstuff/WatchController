@@ -47,6 +47,10 @@
             label4 = new Label();
             label5 = new Label();
             label6 = new Label();
+            latestReleaseLink = new Label();
+            label7 = new Label();
+            label8 = new Label();
+            githubLink = new Label();
             SuspendLayout();
             // 
             // secondTimer
@@ -179,7 +183,7 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(76, 195);
+            textBox1.Location = new Point(92, 195);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(50, 23);
             textBox1.TabIndex = 15;
@@ -188,7 +192,7 @@
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(212, 195);
+            textBox2.Location = new Point(92, 221);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(50, 23);
             textBox2.TabIndex = 16;
@@ -219,19 +223,73 @@
             // label6
             // 
             label6.ForeColor = Color.White;
-            label6.Location = new Point(132, 195);
+            label6.Location = new Point(12, 221);
             label6.Name = "label6";
             label6.Size = new Size(74, 23);
             label6.TabIndex = 19;
             label6.Text = "Receive Port";
             label6.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // latestReleaseLink
+            // 
+            latestReleaseLink.AutoSize = true;
+            latestReleaseLink.BackColor = SystemColors.WindowFrame;
+            latestReleaseLink.Cursor = Cursors.Hand;
+            latestReleaseLink.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point);
+            latestReleaseLink.ForeColor = SystemColors.Window;
+            latestReleaseLink.Location = new Point(247, 239);
+            latestReleaseLink.Name = "latestReleaseLink";
+            latestReleaseLink.Size = new Size(136, 15);
+            latestReleaseLink.TabIndex = 20;
+            latestReleaseLink.Text = "Check For Latest Release";
+            latestReleaseLink.Click += latestReleaseLink_Click;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label7.ForeColor = Color.White;
+            label7.Location = new Point(247, 177);
+            label7.Name = "label7";
+            label7.Size = new Size(79, 15);
+            label7.TabIndex = 21;
+            label7.Text = "OSC Settings";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label8.ForeColor = Color.White;
+            label8.Location = new Point(247, 198);
+            label8.Name = "label8";
+            label8.Size = new Size(207, 15);
+            label8.TabIndex = 22;
+            label8.Text = "Put Together by mikeee324 / VRCStuff";
+            // 
+            // githubLink
+            // 
+            githubLink.AutoSize = true;
+            githubLink.BackColor = SystemColors.WindowFrame;
+            githubLink.Cursor = Cursors.Hand;
+            githubLink.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point);
+            githubLink.ForeColor = SystemColors.Window;
+            githubLink.Location = new Point(247, 221);
+            githubLink.Name = "githubLink";
+            githubLink.Size = new Size(72, 15);
+            githubLink.TabIndex = 23;
+            githubLink.Text = "Github Page";
+            githubLink.Click += githubLink_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.WindowFrame;
-            ClientSize = new Size(477, 230);
+            ClientSize = new Size(477, 273);
+            Controls.Add(githubLink);
+            Controls.Add(label8);
+            Controls.Add(label7);
+            Controls.Add(latestReleaseLink);
             Controls.Add(label6);
             Controls.Add(label5);
             Controls.Add(label4);
@@ -274,5 +332,9 @@
         private Label label4;
         private Label label5;
         private Label label6;
+        private Label latestReleaseLink;
+        private Label label7;
+        private Label label8;
+        private Label githubLink;
     }
 }

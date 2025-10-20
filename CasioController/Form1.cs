@@ -29,14 +29,14 @@ namespace WatchController
 
             try
             {
-
+                string version = System.Windows.Forms.Application.ProductVersion;
+                this.Text = String.Format("Watch Controller {0}", version);
             }
             catch (Exception ex)
             {
-
+                string version = System.Windows.Forms.Application.ProductVersion;
+                this.Text = "Watch Controller - Version Unknown??";
             }
-            string version = System.Windows.Forms.Application.ProductVersion;
-            this.Text = String.Format("Watch Controller {0}", version);
         }
 
         private void secondTimer_Tick(object sender, EventArgs e)

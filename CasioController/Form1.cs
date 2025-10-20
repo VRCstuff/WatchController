@@ -13,6 +13,8 @@ namespace WatchController
         {
             InitializeComponent();
 
+            oscProblem.Visible = false;
+
             tz = TimeZoneInfo.GetSystemTimeZones().ToArray();
             timezoneDropdown.Items.AddRange(tz);
 
@@ -25,7 +27,14 @@ namespace WatchController
             textBox2.Text = $"{(int)Properties.Settings.Default["ReceivePort"]}";
             OscConnectionSettings.ReceivePort = (int)Properties.Settings.Default["ReceivePort"];
 
+            try
+            {
 
+            }
+            catch (Exception ex)
+            {
+
+            }
             string version = System.Windows.Forms.Application.ProductVersion;
             this.Text = String.Format("Watch Controller {0}", version);
         }
@@ -72,10 +81,21 @@ namespace WatchController
             this.realTimeMin.Text = $"RealTimeMin - {realTimeMin:0.00000000}";
 
 
-            // Send data to OSC
-            OscParameter.SendAvatarParameter("RealTimeHour", realTimeHour);
-            OscParameter.SendAvatarParameter("RealTimeHourTZ", realTimeHourTZ);
-            OscParameter.SendAvatarParameter("RealTimeMin", realTimeMin);
+            try
+            {
+                // Send data to OSC
+                OscParameter.SendAvatarParameter("RealTimeHour", realTimeHour);
+                OscParameter.SendAvatarParameter("RealTimeHourTZ", realTimeHourTZ);
+                OscParameter.SendAvatarParameter("RealTimeMin", realTimeMin);
+            }
+            catch (Exception ex)
+            {
+                oscProblem.Visible = true;
+                oscProblem.Text = "!! Problem Connecting To OSC !!\r\n\r\nCannot connect to 127.0.0.1\r\nDo you have a VPN app blocking local network connections?\r\n\r\n" + ex.Message;
+            }
+
+            oscProblem.Visible = false;
+            oscProblem.Text = "!! Problem Connecting To OSC !!\r\n\r\nCannot connect to 127.0.0.1\r\nDo you have a VPN app blocking local network connections?\r\n\r\n";
         }
 
         private void secondBeepTimer_Tick(object sender, EventArgs e)
@@ -91,9 +111,16 @@ namespace WatchController
 
         private void SendBeep()
         {
-            OscParameter.SendAvatarParameter("WatchBeep", true);
-            lastBeepSent = DateTime.Now;
-            LastBeepLabel.Text = lastBeepSent.ToString();
+            try
+            {
+                OscParameter.SendAvatarParameter("WatchBeep", true);
+                lastBeepSent = DateTime.Now;
+                LastBeepLabel.Text = lastBeepSent.ToString();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private void hourlyBeepCheckbox_CheckedChanged(object sender, EventArgs e)
@@ -118,10 +145,17 @@ namespace WatchController
         {
             if (int.TryParse(textBox1.Text, out int value))
             {
-                Properties.Settings.Default["SendPort"] = value;
-                Properties.Settings.Default.Save();
+                try
+                {
+                    Properties.Settings.Default["SendPort"] = value;
+                    Properties.Settings.Default.Save();
 
-                OscConnectionSettings.SendPort = value;
+                    OscConnectionSettings.SendPort = value;
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
         }
 
@@ -129,9 +163,16 @@ namespace WatchController
         {
             if (int.TryParse(textBox2.Text, out int value))
             {
-                Properties.Settings.Default["ReceivePort"] = value;
-                Properties.Settings.Default.Save();
-                OscConnectionSettings.ReceivePort = value;
+                try
+                {
+                    Properties.Settings.Default["ReceivePort"] = value;
+                    Properties.Settings.Default.Save();
+                    OscConnectionSettings.ReceivePort = value;
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
         }
 
@@ -143,6 +184,11 @@ namespace WatchController
         private void githubLink_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("explorer", "https://github.com/VRCstuff/WatchController/");
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

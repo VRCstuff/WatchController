@@ -51,6 +51,7 @@
             label7 = new Label();
             label8 = new Label();
             githubLink = new Label();
+            oscProblem = new Label();
             SuspendLayout();
             // 
             // secondTimer
@@ -80,7 +81,7 @@
             CurrentTimeLabel.ForeColor = Color.White;
             CurrentTimeLabel.Location = new Point(12, 98);
             CurrentTimeLabel.Name = "CurrentTimeLabel";
-            CurrentTimeLabel.Size = new Size(79, 15);
+            CurrentTimeLabel.Size = new Size(80, 15);
             CurrentTimeLabel.TabIndex = 2;
             CurrentTimeLabel.Text = "Current Time:";
             // 
@@ -111,7 +112,7 @@
             LastBeepLabel.ForeColor = Color.White;
             LastBeepLabel.Location = new Point(249, 69);
             LastBeepLabel.Name = "LastBeepLabel";
-            LastBeepLabel.Size = new Size(123, 15);
+            LastBeepLabel.Size = new Size(124, 15);
             LastBeepLabel.TabIndex = 6;
             LastBeepLabel.Text = "Last Beep Time: Never";
             // 
@@ -167,7 +168,7 @@
             realTimeHour.ForeColor = Color.White;
             realTimeHour.Location = new Point(12, 117);
             realTimeHour.Name = "realTimeHour";
-            realTimeHour.Size = new Size(88, 15);
+            realTimeHour.Size = new Size(89, 15);
             realTimeHour.TabIndex = 13;
             realTimeHour.Text = "RealTimeHour: ";
             // 
@@ -177,7 +178,7 @@
             realTimeMin.ForeColor = Color.White;
             realTimeMin.Location = new Point(12, 136);
             realTimeMin.Name = "realTimeMin";
-            realTimeMin.Size = new Size(82, 15);
+            realTimeMin.Size = new Size(83, 15);
             realTimeMin.TabIndex = 14;
             realTimeMin.Text = "RealTimeMin: ";
             // 
@@ -262,7 +263,7 @@
             label8.ForeColor = Color.White;
             label8.Location = new Point(247, 198);
             label8.Name = "label8";
-            label8.Size = new Size(207, 15);
+            label8.Size = new Size(208, 15);
             label8.TabIndex = 22;
             label8.Text = "Put Together by mikeee324 / VRCStuff";
             // 
@@ -280,12 +281,25 @@
             githubLink.Text = "Github Page";
             githubLink.Click += githubLink_Click;
             // 
+            // oscProblem
+            // 
+            oscProblem.BackColor = Color.OrangeRed;
+            oscProblem.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            oscProblem.Location = new Point(12, 9);
+            oscProblem.Name = "oscProblem";
+            oscProblem.Size = new Size(453, 168);
+            oscProblem.TabIndex = 24;
+            oscProblem.Text = "! Problem Connecting To OSC !";
+            oscProblem.TextAlign = ContentAlignment.MiddleCenter;
+            oscProblem.Visible = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.WindowFrame;
-            ClientSize = new Size(477, 273);
+            ClientSize = new Size(477, 299);
+            Controls.Add(oscProblem);
             Controls.Add(githubLink);
             Controls.Add(label8);
             Controls.Add(label7);
@@ -308,6 +322,7 @@
             Controls.Add(label1);
             Name = "Form1";
             Text = "Watch Controller";
+            Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -336,5 +351,6 @@
         private Label label7;
         private Label label8;
         private Label githubLink;
+        private Label oscProblem;
     }
 }
